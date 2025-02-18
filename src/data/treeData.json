@@ -1,0 +1,45 @@
+[
+    {
+      "name": "Sektör 1",
+      "children": [
+        { "name": "Company Maintenance" },
+        {
+          "name": "Employees",
+          "children": [
+            {
+              "name": "Reports",
+              "children": [
+                { "name": "Report1" },
+                { "name": "Report2" },
+                { "name": "Report3" }
+              ]
+            },
+            { "name": "Employee Maint." }
+          ]
+        },
+        { "name": "Human Resources" }
+      ]
+    },
+    {
+      "name": "Sektör 2",
+      "children": [
+        { "name": "Alt Sektör" },
+        { "name": "Company Maintenance" },
+        {
+          "name": "Employees",
+          "children": [
+            {
+              "name": "Reports",
+              "children": [
+                { "name": "Report1" },
+                { "name": "Report2" },
+                { "name": "Report3" }
+              ]
+            },
+            { "name": "Employee Maint." }
+          ]
+        }
+      ]
+    }
+  ]
+  

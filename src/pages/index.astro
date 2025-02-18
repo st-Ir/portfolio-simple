@@ -1,0 +1,286 @@
+---
+import PageLayout from '../layouts/BaseLayout.astro'
+import Section from '../components/Section.astro'
+import Card from '../components/Card.astro'
+import ProjectCard from '../components/ProjectCard.astro'
+import Label from '../components/Label.astro'
+import SkillLayout from '../components/SkillLayout.astro'
+import PostPreview from '@/components/blog/PostPreview.astro'
+
+import { Image } from 'astro:assets'
+import astro from '../assets/pp.png'
+
+import { getAllPosts, sortMDByDate } from '@/utils'
+
+const languages = ['Indonesia', 'English', 'Japanese']
+const program = ['Astro', 'Next']
+const dsign = ['Figma', 'Adobe Photoshop', 'ibisPaintX']
+
+const allPosts = await getAllPosts()
+const allPostsByDate = sortMDByDate(allPosts) // Batasi total post
+---
+
+<PageLayout meta={{ title: 'Home' }}>
+	<div class='flex w-full flex-col gap-y-10'>
+		<section class='flex flex-col items-center gap-y-7'>
+			<Image
+				src={astro}
+				alt='profile photo'
+				class='h-28 w-auto rounded-full p-1'
+				loading='eager'
+			/>
+
+			<div class='flex flex-col items-center gap-y-4'>
+				<h1 class='text-3xl font-bold' style='font-family: "Vintage"; font-weight: 400'>Dhan</h1>
+				<a
+					href='/'
+					class='flex flex-row items-center gap-x-3 rounded-3xl border border-input px-4 py-2 text-sm shadow-sm transition-all hover:shadow-md'
+				>
+					<span class='relative flex items-center justify-center'>
+						<span
+							class='absolute inline-flex h-2 w-2 animate-ping rounded-full border border-green-400 bg-green-400 opacity-75'
+						></span>
+						<span class='relative inline-flex h-2 w-2 rounded-full bg-green-400'></span>
+					</span>
+
+					<p class='font-medium'>Deepdreamin</p>
+				</a>
+				<div class='flex flex-wrap justify-center gap-x-7 gap-y-3'>
+					<script src='https://cdn.lordicon.com/lordicon.js'></script>
+					<lord-icon
+						src='https://cdn.lordicon.com/xpgofwru.json'
+						trigger='hover'
+						style='width:15px;height:15px'
+						class='current-color'
+					>
+					</lord-icon>
+					<Label title='West Jakarta' style='font-weight: 600; '>
+						<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' class='h-5 w-5' slot='icon'>
+							<path
+								fill='currentColor'
+								d='M12.003 11.73q.668 0 1.14-.475q.472-.475.472-1.143t-.475-1.14q-.476-.472-1.143-.472t-1.14.476q-.472.475-.472 1.143t.475 1.14q.476.472 1.143.472M12 19.677q2.82-2.454 4.458-4.991q1.638-2.538 1.638-4.39q0-2.744-1.737-4.53T12 3.981q-2.621 0-4.359 1.785t-1.737 4.53q0 1.852 1.638 4.39q1.639 2.537 4.458 4.99m0 1.343q-3.525-3.117-5.31-5.814q-1.786-2.697-1.786-4.909q0-3.173 2.066-5.234Q9.037 3 12 3t5.03 2.062q2.066 2.061 2.066 5.234q0 2.212-1.785 4.909q-1.786 2.697-5.311 5.814m0-10.904'
+							></path>
+						</svg>
+					</Label>
+					<Label as='a' href='https://github.com/st-Ir/' target='_blank'>
+						<svg
+							xmlns='http://www.w3.org/2000/svg'
+							viewBox='0 0 24 24'
+							slot='icon'
+							width='16'
+							height='16'
+						>
+							<path
+								fill='currentColor'
+								d='M12,2A10,10,0,0,0,8.84,21.5c.5.08.66-.23.66-.5V19.31C6.73,19.91,6.14,18,6.14,18A2.69,2.69,0,0,0,5,16.5c-.91-.62.07-.6.07-.6a2.1,2.1,0,0,1,1.53,1,2.15,2.15,0,0,0,2.91.83,2.16,2.16,0,0,1,.63-1.34C8,16.17,5.62,15.31,5.62,11.5a3.87,3.87,0,0,1,1-2.71,3.58,3.58,0,0,1,.1-2.64s.84-.27,2.75,1a9.63,9.63,0,0,1,5,0c1.91-1.29,2.75-1,2.75-1a3.58,3.58,0,0,1,.1,2.64,3.87,3.87,0,0,1,1,2.71c0,3.82-2.34,4.66-4.57,4.91a2.39,2.39,0,0,1,.69,1.85V21c0,.27.16.59.67.5A10,10,0,0,0,12,2Z'
+							></path>
+						</svg>
+					</Label>
+				</div>
+			</div>
+		</section>
+
+		<Section title='About'>
+			<p class='text-muted-foreground'>
+				Greetings!... dhan here you can tell me Ir! I'm a software engineer with a passion for
+				building scalable and efficient systems. I have a strong interest in cloud computing,
+				automation, and artificial intelligence. In my free time, I enjoy reading about new
+				technologies and writing about my experiences in the field of software engineering.
+			</p>
+		</Section>
+
+		{
+			allPostsByDate.length > 0 && (
+				<Section title='Highlight'>
+					<ul id='post-list' class='flex flex-col gap-y-2'>
+						{allPostsByDate
+							.filter((p) => p.data.tags && p.data.tags.includes('blog'))
+							.map((p) => (
+								<li class='post-item flex flex-col gap-x-2 sm:flex-row'>
+									<PostPreview post={p} />
+								</li>
+							))}
+					</ul>
+				</Section>
+			)
+		}
+
+		<Section title='Experience'>
+			<Card
+				heading='Djoes Kode'
+				subheading='Person in Charge - PIC'
+				date='Jul 2023 - Des 2023'
+				imagePath='/src/assets/jk.png'
+				altText='Lorem, ipsum dolor sit'
+				imageClass='h-20 w-auto md:-left-20 mt-5 md:mt-0 color-image'
+				fill='currentColor'
+			>
+				<ul class='ml-4 list-disc text-muted-foreground'>
+					<li>
+						Managed project timelines and ensured the completion of tasks according to deadlines,
+						improving project delivery efficiency by 20%.
+					</li>
+					<li>
+						Supervised a team of eleven members, ensuring effective communication and task
+						delegation.
+					</li>
+					<li>
+						Streamlined workflow processes by identifying bottlenecks and proposing actionable
+						solutions.
+					</li>
+					<li>
+						Acted as the primary liaison between clients and the technical team, ensuring smooth
+						project execution.
+					</li>
+				</ul>
+				<blockquote
+					class='mb-6 mt-3 border-l-4 border-muted-foreground pl-4 italic text-muted-foreground'
+				>
+					"My role as a PIC significantly contributed to enhancing team productivity, fostering
+					better client relationships, and delivering successful project outcomes."
+				</blockquote>
+			</Card>
+			<Card
+				heading='Duta Indah Hospital'
+				subheading='General Affairs - Internship'
+				date='Feb 2023 - April 2023'
+				imagePath='/src/assets/rsdi.png'
+				altText='Duta Indah Hospital logo'
+				imageClass='h-16 w-auto md:-left-20 mt-5 md:mt-0 color-image'
+				fill='currentColor'
+			>
+				<ul class='ml-4 mt-2 list-disc text-muted-foreground'>
+					<li>
+						Assisted in organizing and digitizing company documents using Google Drive, reducing
+						document retrieval time by 30%.
+					</li>
+					<li>
+						Successfully entered over 500 customer records into the company database, ensuring
+						accuracy and completeness of data.
+					</li>
+					<li>
+						Contributed to the marketing team by designing social media materials for the promotion
+						of new products, which were later used in the company's digital campaigns.
+					</li>
+					<li>
+						Provided valuable support to the administrative team by managing routine tasks, allowing
+						senior employees to focus on more strategic responsibilities.
+					</li>
+				</ul>
+				<blockquote
+					class='mb-6 mt-3 border-l-4 border-muted-foreground pl-4 italic text-muted-foreground'
+				>
+					"My contribution helped the company improve operational efficiency, enhance marketing
+					efforts through better promotional materials, and streamline administrative tasks for
+					long-term productivity."
+				</blockquote>
+				<a href="./reportrsdi.pdf" target="_blank" rel="noopener noreferrer" class=" underline italic text-right">Final Report</a>
+				<a href="./RSDI.pdf" target="_blank" rel="noopener noreferrer" class="mb-4 underline italic text-right">Certificate</a>
+			</Card>
+		</Section>
+
+		<Section title='Education'>
+			<Card
+				heading='SMK Cengkareng 1'
+				subheading='Office Automation and Governance - OTKP'
+				date='Dec 2022 - Nov 2023'
+				imagePath='/src/assets/saceng.png'
+				altText='Lorem, ipsum dolor sit'
+				imageClass='h-16 w-auto md:-left-20 mt-5 md:mt-0 color-image'
+			>
+				<p class='mb-2 text-muted-foreground'>
+					SMK Cengkareng 1 Jakarta is a vocational high school located in Jakarta, Indonesia, The
+					OTKP (Office Automation and Governance) program is a branch of Management Science,
+					specifically Office Management, that focuses on expertise in Business and Management.
+
+				</p>
+				<a href="https://smkcengkareng1-jkt.sch.id/otomatisasi-dan-tata-kelola-perkantoran-otkp/" target="_blank" rel="noopener noreferrer" class="underline italic text-right">Competency Standards</a>
+			</Card>
+			<Card
+				heading='PIK Campus'
+				subheading='WORKSHOP'
+				date='Dec 2022 - Nov 2023'
+				imagePath='/src/assets/UIC.png'
+				altText='Lorem, ipsum dolor sit'
+				class='w-full w-100'
+				imageClass='h-16 w-auto right-10 mt-5 md:mt-2 color-image'
+				>
+				
+				<p class='mb-2 text-muted-foreground'>Mechatronics with Green Energy by Unisadhuguna PIK Campus.</p>
+				<a href="https://pdfhost.io/v/zYDiSDpVG_Mechatronics_Green_Energy" target="_blank" rel="noopener noreferrer" class="underline italic text-right">Course Materials</a>
+				<a href="https://pdfhost.io/v/AnQYon7D5_PIK_UIC_UTS_College_Certificate_" target="_blank" rel="noopener noreferrer" class="underline italic text-right">Certificate</a>
+		</Card>
+		</Section>
+
+		<Section title='Projects'>
+			<div class='flex flex-col gap-y-3 sm:flex-row sm:gap-x-3 sm:gap-y-0'>
+				<ProjectCard
+					href='https://st-ir.github.io/Hobbies/'
+					repohref='https://github.com/st-Ir/Hobbies'
+					target='_blank'
+					heading='Hobbies'
+					subheading='A static website that contains my hobbies.'
+					imagePath='/src/assets/hobbys.jpg'
+					altText='Example'
+					class='w-full sm:w-1/2'
+				/>
+				<ProjectCard
+					href='https://roselia0backup.vercel.app/'
+					target='_blank'
+					heading='Roselia Fanpage'
+					subheading='A fanpage for Roselia. build with astro express supabase'
+					imagePath='/src/assets/Roselia.jpg'
+					altText='Lorem, ipsum dolor sit'
+					class='w-full sm:w-1/2'
+				/>	
+				<ProjectCard
+				href='https://archiveofap24.vercel.app/'
+				target='_blank'
+				heading='Archive of Ap24'
+				subheading='a specialist class in office get a gallery archive.'
+				imagePath='/src/assets/134.jpg'
+				altText='Lorem, ipsum dolor sit'
+				class='w-full sm:w-1/2'
+			/>
+			</div>
+		</Section>
+
+		<Section title='Certifications'>
+			<Card
+				as='a'
+				heading='BNSP-LSP-1239-ID (2026)'
+				subheading='The BNSP (Badan Nasional Sertifikasi Profesi) certificate is an official competency certification issued by Indonesia National Professional Certification Agency'
+				date='2023 - 2026'
+				imagePath='/src/assets/bnsp.png'
+				altText='Lorem, ipsum dolor sit'
+				imageClass='h-16 w-auto md:-left-20 mt-5 md:mt-0 color-image'
+				fill='currentColor'
+				href='/BNSP-LSP-1239-ID.pdf'
+			/>
+			<Card
+			heading='Other'
+			class='w-full w-100'
+			imageClass='h-16 w-auto right-10 mt-5 md:mt-2 color-image'
+			>
+			<a href="/pgm.pdf" target="_blank" rel="noopener noreferrer" class="underline px-4 py-2 text-start">Public Speaking</a>
+	</Card>
+		</Section>
+
+		<Section title='Skills'>
+			<SkillLayout title='Languages' skills={languages} />
+			<SkillLayout title='Program' skills={program} />
+			<SkillLayout title='Design' skills={dsign} />
+		</Section>
+	</div>
+	<a
+		href='mailto:irharuki7@gmail'
+		class='mt-16 flex flex-row items-center gap-x-3 rounded-3xl border border-input px-4 py-2 text-sm shadow-sm transition-all hover:shadow-md'
+	>
+		<span class='relative flex items-center justify-center'>
+			<span
+				class='absolute inline-flex h-2 w-2 animate-ping rounded-full border border-green-400 bg-green-400 opacity-75'
+			></span>
+			<span class='relative inline-flex h-2 w-2 rounded-full bg-green-400'></span>
+		</span>
+	</a>
+</PageLayout>
